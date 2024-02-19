@@ -1,21 +1,21 @@
 <?php
 /**
- * Plugin Name:       Boilerplateblox
- * Description:       Example block scaffolded with Create Block tool.
+ * Plugin Name:       Text Box
+ * Description:       Example box of text block scaffolded with Create Block tool.
  * Requires at least: 6.1
  * Requires PHP:      7.0
  * Version:           0.1.0
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       boilerplateblox
+ * Text Domain:       text-box
  *
- * @package           create-block
+ * @package           blocks-course
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+// if ( ! defined( 'ABSPATH' ) ) {
+// 	exit; // Exit if accessed directly.
+// }
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function boilerplateblox_boilerplateblox_block_init() {
-	register_block_type( __DIR__ . '/build' );
+function blocks_course_text_box_block_init() {
+	register_block_type_from_metadata( __DIR__ );
 }
-add_action( 'init', 'boilerplateblox_boilerplateblox_block_init' );
+add_action( 'init', 'blocks_course_text_box_block_init' );
