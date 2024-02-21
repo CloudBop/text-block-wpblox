@@ -27,10 +27,11 @@ import {
  * @see https://developer.wordpress.org/block-editor/reference-guides/components/
  */
 
-import // ToolbarGroup,
-// ToolbarButton,
-// ToolbarDropdownMenu,
-'@wordpress/components';
+// import {
+// 	// ToolbarGroup,
+// 	// ToolbarButton,
+// 	// ToolbarDropdownMenu,
+// } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
