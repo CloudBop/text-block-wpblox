@@ -15,6 +15,7 @@ import {
 	useBlockProps,
 	RichText,
 	BlockControls,
+	AlignmentToolbar,
 } from '@wordpress/block-editor';
 
 /**
@@ -26,11 +27,10 @@ import {
  * @see https://developer.wordpress.org/block-editor/reference-guides/components/
  */
 
-import {
-	ToolbarGroup,
-	ToolbarButton,
-	ToolbarDropdownMenu,
-} from '@wordpress/components';
+import // ToolbarGroup,
+// ToolbarButton,
+// ToolbarDropdownMenu,
+'@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -50,88 +50,29 @@ import './editor.scss';
  */
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { text } = attributes;
+	const { text, alignment } = attributes;
+	const onChangeAlignment = ( newAlignment ) => {
+		setAttributes( { alignment: newAlignment } );
+	};
+	const onChangeText = ( newText ) => {
+		setAttributes( { text: newText } );
+	};
 
 	return (
 		<>
-			{ /* WP allow us to use attribute = group 
-		
-		to enforce UI Block controls to appear in the correct WP UI order 
-
-
-
-		for inline styling */ }
-			<BlockControls group="inline">
-				<p>Inline Controls</p>
-			</BlockControls>
-			<BlockControls group="block">
-				<p>Block Controls</p>
-			</BlockControls>
-
-			{ /*
-			
-			
-			*/ }
-			<BlockControls
-				group="other"
-				controls={ [
-					{
-						title: 'Button 1',
-						icon: 'admin-generic',
-						isActive: true,
-						// onClick: () => console.log('Button 1 Clicked'),
-					},
-					{
-						title: 'Button 2',
-						icon: 'admin-collapse',
-						// onClick: () => console.log('Button 2 Clicked'),
-					},
-				] }
-			>
-				{ /* USING PRE_BUILT GUTENBERG-EDIOT-UI */ }
-				{ text && (
-					<ToolbarGroup>
-						text
-						<ToolbarButton
-							title={ __( 'Align Left', 'text-box' ) }
-							icon="editor-alignleft"
-							// onClick={() => console.log('Align Left')}
-						/>
-						<ToolbarButton
-							title={ __( 'Align Center', 'text-box' ) }
-							icon="editor-aligncenter"
-							// onClick={() => console.log('Align center')}
-						/>
-						<ToolbarButton
-							title={ __( 'Align Right', 'text-box' ) }
-							icon="editor-alignright"
-							// onClick={() => console.log('Align Right')}
-						/>
-						<ToolbarDropdownMenu
-							icon="arrow-down-alt2"
-							label={ __( 'More Alignments', 'text-box' ) }
-							controls={ [
-								{
-									title: __( 'Wide', 'text-box' ),
-									icon: 'align-wide',
-								},
-								{
-									title: __( 'Full', 'text-box' ),
-									icon: 'align-full-width',
-								},
-							] }
-						/>
-					</ToolbarGroup>
-				) }
-				<ToolbarGroup>
-					<p>Group 2</p>
-				</ToolbarGroup>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ alignment }
+					onChange={ onChangeAlignment }
+				/>
 			</BlockControls>
 			{ /*  */ }
 			<RichText
-				{ ...useBlockProps() }
+				{ ...useBlockProps( {
+					className: `text-box-align-${ alignment }`,
+				} ) }
 				// save state on change
-				onChange={ ( value ) => setAttributes( { text: value } ) }
+				onChange={ onChangeText }
 				value={ text }
 				placeholder={ __( 'Your Text', 'text-box' ) }
 				tagName="h4"
@@ -147,3 +88,75 @@ export default function Edit( { attributes, setAttributes } ) {
 		// </p>
 	);
 }
+
+/*
+	{ /* WP allow us to use attribute = group 
+		
+		to enforce UI Block controls to appear in the correct WP UI order 
+
+
+
+		for inline styling * 
+			<BlockControls group="inline">
+				<p>Inline Controls</p>
+			</BlockControls>
+			<BlockControls group="block">
+				<p>Block Controls</p>
+			</BlockControls>
+*/
+/*
+<BlockControls
+	group="other"
+	controls={[
+		{
+			title: 'Button 1',
+			icon: 'admin-generic',
+			isActive: true,
+			// onClick: () => console.log('Button 1 Clicked'),
+		},
+		{
+			title: 'Button 2',
+			icon: 'admin-collapse',
+			// onClick: () => console.log('Button 2 Clicked'),
+		},
+	]}
+>
+	{ /* USING PRE_BUILT GUTENBERG-EDIOT-UI *}
+	{text && (
+		<ToolbarGroup>
+			text
+			<ToolbarButton
+				title={__('Align Left', 'text-box')}
+				icon="editor-alignleft"
+			// onClick={() => console.log('Align Left')}
+			/>
+			<ToolbarButton
+				title={__('Align Center', 'text-box')}
+				icon="editor-aligncenter"
+			// onClick={() => console.log('Align center')}
+			/>
+			<ToolbarButton
+				title={__('Align Right', 'text-box')}
+				icon="editor-alignright"
+			// onClick={() => console.log('Align Right')}
+			/>
+			<ToolbarDropdownMenu
+				icon="arrow-down-alt2"
+				label={__('More Alignments', 'text-box')}
+				controls={[
+					{
+						title: __('Wide', 'text-box'),
+						icon: 'align-wide',
+					},
+					{
+						title: __('Full', 'text-box'),
+						icon: 'align-full-width',
+					},
+				]}
+			/>
+		</ToolbarGroup>
+	)}
+	<ToolbarGroup>
+		<p>Group 2</p>
+	</ToolbarGroup>
+</BlockControls>*/
