@@ -11,7 +11,26 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	RichText,
+	BlockControls,
+} from '@wordpress/block-editor';
+
+/**
+ * This package includes a library of generic WordPress components to be used for creating
+ * common UI elements shared between screens and features of the WordPress dashboard.
+ * Gutenberg
+ *
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/components/
+ */
+
+import {
+	ToolbarGroup,
+	ToolbarButton,
+	ToolbarDropdownMenu,
+} from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -34,15 +53,91 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { text } = attributes;
 
 	return (
-		<RichText
-			{ ...useBlockProps() }
-			// save state on change
-			onChange={ ( value ) => setAttributes( { text: value } ) }
-			value={ text }
-			placeholder={ __( 'Your Text', 'text-box' ) }
-			tagName="h4"
-			allowedFormats={ [ 'core/bold' ] }
-		/>
+		<>
+			{ /* WP allow us to use attribute = group 
+		
+		to enforce UI Block controls to appear in the correct WP UI order 
+
+
+
+		for inline styling */ }
+			<BlockControls group="inline">
+				<p>Inline Controls</p>
+			</BlockControls>
+			<BlockControls group="block">
+				<p>Block Controls</p>
+			</BlockControls>
+
+			{ /*
+			
+			
+			*/ }
+			<BlockControls
+				group="other"
+				controls={ [
+					{
+						title: 'Button 1',
+						icon: 'admin-generic',
+						isActive: true,
+						// onClick: () => console.log('Button 1 Clicked'),
+					},
+					{
+						title: 'Button 2',
+						icon: 'admin-collapse',
+						// onClick: () => console.log('Button 2 Clicked'),
+					},
+				] }
+			>
+				{ /* USING PRE_BUILT GUTENBERG-EDIOT-UI */ }
+				{ text && (
+					<ToolbarGroup>
+						text
+						<ToolbarButton
+							title={ __( 'Align Left', 'text-box' ) }
+							icon="editor-alignleft"
+							// onClick={() => console.log('Align Left')}
+						/>
+						<ToolbarButton
+							title={ __( 'Align Center', 'text-box' ) }
+							icon="editor-aligncenter"
+							// onClick={() => console.log('Align center')}
+						/>
+						<ToolbarButton
+							title={ __( 'Align Right', 'text-box' ) }
+							icon="editor-alignright"
+							// onClick={() => console.log('Align Right')}
+						/>
+						<ToolbarDropdownMenu
+							icon="arrow-down-alt2"
+							label={ __( 'More Alignments', 'text-box' ) }
+							controls={ [
+								{
+									title: __( 'Wide', 'text-box' ),
+									icon: 'align-wide',
+								},
+								{
+									title: __( 'Full', 'text-box' ),
+									icon: 'align-full-width',
+								},
+							] }
+						/>
+					</ToolbarGroup>
+				) }
+				<ToolbarGroup>
+					<p>Group 2</p>
+				</ToolbarGroup>
+			</BlockControls>
+			{ /*  */ }
+			<RichText
+				{ ...useBlockProps() }
+				// save state on change
+				onChange={ ( value ) => setAttributes( { text: value } ) }
+				value={ text }
+				placeholder={ __( 'Your Text', 'text-box' ) }
+				tagName="h4"
+				allowedFormats={ [ 'core/bold' ] }
+			/>
+		</>
 
 		// <p { ...useBlockProps() }>
 		// 	{ __(
