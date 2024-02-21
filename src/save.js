@@ -4,7 +4,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -15,10 +15,29 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-export default function save() {
+
+export default function save( { attributes } ) {
+	const { text } = attributes;
 	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Boilerplateblox – hello from the saved content!' }
-		</p>
+		<RichText.Content
+			{ ...useBlockProps.save() }
+			tagName="h4"
+			value={ text }
+		/>
+		// <p { ...useBlockProps.save() }>
+		// 	{ 'Boilerplateblox – hello from the saved content!' }
+		// </p>
 	);
 }
+
+/* block.json 
+ these arributes won't be stored in the gutenbrg delimiter as the src is in html content, it tells wordpress to parse the raw html.
+
+"attributes": {
+		"text": {
+			"type": "string",
+			"source": "html",
+			"selector": "h4"
+		}
+	}
+*/
