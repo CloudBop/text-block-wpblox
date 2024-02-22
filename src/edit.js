@@ -20,6 +20,7 @@ import {
 	AlignmentToolbar,
 	PanelColorSettings,
 	ContrastChecker,
+	withColors,
 } from '@wordpress/block-editor';
 
 /**
@@ -64,22 +65,23 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 
-export default function Edit( { attributes, setAttributes } ) {
-	const { text, alignment, backgroundColor, textColor } = attributes;
+function Edit( props ) {
+	const {
+		attributes,
+		setAttributes,
+		backgroundColor,
+		textColor,
+		setBackgroundColor,
+		setTextColor,
+	} = props;
+	const { text, alignment } = attributes;
+
 	const onChangeAlignment = ( newAlignment ) => {
 		setAttributes( { alignment: newAlignment } );
 	};
 	const onChangeText = ( newText ) => {
 		setAttributes( { text: newText } );
 	};
-
-	const onBackgroundColorChange = ( newBgColor ) => {
-		setAttributes( { backgroundColor: newBgColor } );
-	};
-	const onTextColorChange = ( newTextColor ) => {
-		setAttributes( { textColor: newTextColor } );
-	};
-
 	return (
 		<>
 			<InspectorControls>
@@ -90,20 +92,20 @@ export default function Edit( { attributes, setAttributes } ) {
 					disableCustomColors={ false }
 					colorSettings={ [
 						{
-							value: backgroundColor,
-							onChange: onBackgroundColorChange,
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
 							label: __( 'Background Color', 'text-box' ),
 						},
 						{
-							value: textColor,
-							onChange: onTextColorChange,
+							value: textColor.color,
+							onChange: setTextColor,
 							label: __( 'Text Color', 'text-box' ),
 						},
 					] }
 				></PanelColorSettings>
 				<ContrastChecker
-					textColor={ textColor }
-					backgroundColor={ backgroundColor }
+					textColor={ textColor.color }
+					backgroundColor={ backgroundColor.color }
 				/>
 			</InspectorControls>
 			<BlockControls>
@@ -117,8 +119,8 @@ export default function Edit( { attributes, setAttributes } ) {
 				{ ...useBlockProps( {
 					className: `text-box-align-${ alignment }`,
 					style: {
-						backgroundColor,
-						color: textColor,
+						backgroundColor: backgroundColor.color,
+						color: textColor.color,
 					},
 				} ) }
 				// save state on change
@@ -138,6 +140,14 @@ export default function Edit( { attributes, setAttributes } ) {
 		// </p>
 	);
 }
+
+//
+// will allow theme colour class namaes to be passed from sidebar inspector into FE
+//
+export default withColors( {
+	backgroundColor: 'backgroundColor',
+	textColor: 'color',
+} )( Edit );
 
 /*
 	{ /* WP allow us to use attribute = group 

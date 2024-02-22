@@ -38,6 +38,7 @@
 		"stylelint": "^14.16.1"
 	},
 	"dependencies": {
-		"@wordpress/components": "^26.0.1"
+		"@wordpress/components": "^26.0.1",
+		"classnames": "^2.5.1"
 	}
 }

@@ -45,7 +45,15 @@ import metadata from '../block.json';
 // 	},
 // 	"textColor": {
 // 		"type": "string"
-// 	}
+// 	},
+
+// necessary for custom color picker to be passed as style
+// "customBackgroundColor": {
+// 	"type": "string"
+// },
+// "customTextColor": {
+// 	"type": "string"
+// }
 // }
 //
 registerBlockType( metadata.name, {
