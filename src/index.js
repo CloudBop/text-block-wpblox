@@ -26,6 +26,28 @@ import metadata from '../block.json';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
+//
+// block.json
+// "attributes": {
+//  these arributes won't be stored in the gutenbrg delimiter as the src is in html content, it tells wordpress to parse the raw html.
+// 	"text": {
+// 		"type": "string",
+// 			"source": "html",
+// 				"selector": "h4"
+// 	},
+// 	"alignment": {
+// 		"type": "string",
+// 			"default": "left"
+// 	},
+// 	"backgroundColor": {
+// 		"type": "string"
+// 	},
+// 	"textColor": {
+// 		"type": "string"
+// 	}
+// }
+//
 registerBlockType( metadata.name, {
 	icon: {
 		src: 'text-page',
@@ -51,3 +73,25 @@ registerBlockType( metadata.name, {
 	 */
 	save,
 } );
+
+/* block.json 
+ these arributes won't be stored in the gutenbrg delimiter as the src is in html content, it tells wordpress to parse the raw html.
+
+"attributes": {
+		"text": {
+			"type": "string",
+			"source": "html",
+			"selector": "h4"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		}
+	}
+*/
