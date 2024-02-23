@@ -85,6 +85,8 @@ registerBlockType( metadata.name, {
 /* block.json 
  these arributes won't be stored in the gutenbrg delimiter as the src is in html content, it tells wordpress to parse the raw html.
 
+ // textcolor + bgc theme colors need BP wp doexn't support color.
+
 "attributes": {
 		"text": {
 			"type": "string",

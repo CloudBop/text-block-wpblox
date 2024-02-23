@@ -16,11 +16,7 @@ import {
 	useBlockProps,
 	RichText,
 	BlockControls,
-	InspectorControls,
 	AlignmentToolbar,
-	PanelColorSettings,
-	ContrastChecker,
-	withColors,
 } from '@wordpress/block-editor';
 
 /**
@@ -65,15 +61,8 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 
-function Edit( props ) {
-	const {
-		attributes,
-		setAttributes,
-		backgroundColor,
-		textColor,
-		setBackgroundColor,
-		setTextColor,
-	} = props;
+export default function Edit( props ) {
+	const { attributes, setAttributes } = props;
 	const { text, alignment } = attributes;
 
 	const onChangeAlignment = ( newAlignment ) => {
@@ -82,73 +71,28 @@ function Edit( props ) {
 	const onChangeText = ( newText ) => {
 		setAttributes( { text: newText } );
 	};
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelColorSettings
-					title={ __( 'Color Settings', 'text-box' ) }
-					icon="admin-appearance"
-					initialOpen
-					disableCustomColors={ false }
-					colorSettings={ [
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __( 'Background Color', 'text-box' ),
-						},
-						{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __( 'Text Color', 'text-box' ),
-						},
-					] }
-				></PanelColorSettings>
-				<ContrastChecker
-					textColor={ textColor.color }
-					backgroundColor={ backgroundColor.color }
-				/>
-			</InspectorControls>
 			<BlockControls>
 				<AlignmentToolbar
 					value={ alignment }
 					onChange={ onChangeAlignment }
 				/>
 			</BlockControls>
-			{ /*  */ }
 			<RichText
 				{ ...useBlockProps( {
 					className: `text-box-align-${ alignment }`,
-					style: {
-						backgroundColor: backgroundColor.color,
-						color: textColor.color,
-					},
 				} ) }
-				// save state on change
 				onChange={ onChangeText }
 				value={ text }
 				placeholder={ __( 'Your Text', 'text-box' ) }
 				tagName="h4"
-				allowedFormats={ [ 'core/bold' ] }
+				allowedFormats={ [] }
 			/>
 		</>
-
-		// <p { ...useBlockProps() }>
-		// 	{ __(
-		// 		'Boilerplateblox – hello from the editor!',
-		// 		'boilerplateblox'
-		// 	) }
-		// </p>
 	);
 }
-
-//
-// will allow theme colour class namaes to be passed from sidebar inspector into FE
-//
-export default withColors( {
-	backgroundColor: 'backgroundColor',
-	textColor: 'color',
-} )( Edit );
-
 /*
 	{ /* WP allow us to use attribute = group 
 		
