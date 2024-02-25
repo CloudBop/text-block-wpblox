@@ -30,7 +30,7 @@ import metadata from '../block.json';
 import { __ } from '@wordpress/i18n';
 // import deprecated block interface
 import v1 from './v1';
-// import v2 from './v2';
+import v2 from './v2';
 //
 // block.json
 // "attributes": {
@@ -86,7 +86,7 @@ registerBlockType( metadata.name, {
 	save,
 	deprecated: [
 		// update validation of new attribute textAlignment to alignment
-		// v2 ,
+		v2,
 		// revalidate out-of-date gutenberg content... EG if htmltag changes
 		v1,
 	], // left to right
