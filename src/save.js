@@ -19,9 +19,9 @@ import classnames from 'classnames';
  */
 
 export default function save( { attributes } ) {
-	const { text, alignment, shadow, shadowOpacity } = attributes;
+	const { text, textAlignment, shadow, shadowOpacity } = attributes;
 
-	const classes = classnames( `text-box-align-${ alignment }`, {
+	const classes = classnames( `text-box-align-${ textAlignment }`, {
 		// if righthand arrity evals true, then left hand string is added as class
 		'has-shadow': shadow,
 		// modifier
