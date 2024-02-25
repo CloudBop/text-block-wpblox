@@ -53,7 +53,7 @@
 			"source": "html",
 			"selector": "p"
 		},
-		"alignment": {
+		"textAlignment": {
 			"type": "string",
 			"default": "left"
 		},
