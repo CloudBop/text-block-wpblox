@@ -1,5 +1,6 @@
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 import classnames from 'classnames';
+import { omit } from 'lodash';
 import blockData from '../block.json';
 // overrule the updated versions with the old...
 const v1 = {
@@ -16,12 +17,27 @@ const v1 = {
 	},
 	attributes: {
 		...blockData.attributes,
+		// remove updated attribute name from obj
+		...omit( blockData.attributes, [ 'textAlignment' ] ),
+		// ... and revert to previous
+		alignment: {
+			type: 'string',
+			default: 'left',
+		},
 		text: {
 			type: 'string',
 			source: 'html',
 			// here I am
 			selector: 'h4',
 		},
+	},
+	migrate: ( attributes ) => {
+		return {
+			// remove old attributes key
+			...omit( attributes, [ 'alignment' ] ),
+			// and update to new one
+			textAlignment: attributes.alignment,
+		};
 	},
 	save: ( { attributes } ) => {
 		const { text, alignment, shadow, shadowOpacity } = attributes;
