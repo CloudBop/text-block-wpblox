@@ -27,6 +27,8 @@ import metadata from '../block.json';
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 
+import { __ } from '@wordpress/i18n';
+
 //
 // block.json
 // "attributes": {
@@ -80,6 +82,19 @@ registerBlockType( metadata.name, {
 	 * @see ./save.js
 	 */
 	save,
+
+	// variation of block
+	variations: [
+		{
+			name: 'blocks-course/gradient-text-box',
+			title: __( 'Gradient Text Box' ),
+			icon: 'wordpress',
+			attributes: {
+				gradient: 'red-to-blue',
+				shadow: true,
+			},
+		},
+	],
 } );
 
 /* block.json 
