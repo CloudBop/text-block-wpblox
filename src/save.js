@@ -19,9 +19,14 @@ import classnames from 'classnames';
  */
 
 export default function save( { attributes } ) {
-	const { text, alignment } = attributes;
+	const { text, alignment, shadow, shadowOpacity } = attributes;
 
-	const classes = classnames( `text-box-align-${ alignment }` );
+	const classes = classnames( `text-box-align-${ alignment }`, {
+		// if righthand arrity evals true, then left hand string is added as class
+		'has-shadow': shadow,
+		// modifier
+		[ `shadow-opacity-${ shadowOpacity }` ]: shadow && shadowOpacity,
+	} );
 
 	return (
 		<RichText.Content
