@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -95,6 +95,63 @@ registerBlockType( metadata.name, {
 			},
 		},
 	],
+	transforms: {
+		// from another block to text-block
+		from: [
+			{
+				type: 'block',
+				blocks: [ 'core/paragraph' ],
+				transform: ( { content, align } ) => {
+					return createBlock( 'blocks-course/text-box', {
+						text: content,
+						alignment: align,
+					} );
+				},
+			},
+			{
+				//  type textbox and then press enter to create a new block
+				type: 'enter',
+				regExp: /textbox/i,
+				transform: () => {
+					return createBlock( 'blocks-course/text-box', {
+						shadow: true,
+						gradient: 'red-to-blue',
+					} );
+				},
+			},
+			{
+				//  type textbox and then press space to create a new block
+				type: 'prefix',
+				prefix: 'textbox',
+				transform: () => {
+					return createBlock( 'blocks-course/text-box' );
+				},
+			},
+		],
+		to: [
+			{
+				type: 'block',
+				// would be nice to reset colour styling
+				blocks: [ 'core/paragraph' ],
+				isMatch: ( { text } ) => {
+					//  if there's no text then don't allow p transformation
+					return text ? true : false;
+				},
+				transform: ( attributes ) => {
+					// console.log("🚀 ~ attributes:", attributes)
+					const { text, alignment } = attributes;
+
+					return createBlock( 'core/paragraph', {
+						content: text,
+						align: alignment,
+						// these won't chane on transform
+						gradient: false,
+						textColor: 'black',
+					} );
+				},
+			},
+		],
+	},
 } );
 
 /* block.json 
