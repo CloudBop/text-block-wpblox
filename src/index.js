@@ -30,6 +30,7 @@ import metadata from '../block.json';
 import { __ } from '@wordpress/i18n';
 // import deprecated block interface
 import v1 from './v1';
+// import v2 from './v2';
 //
 // block.json
 // "attributes": {
@@ -83,8 +84,12 @@ registerBlockType( metadata.name, {
 	 * @see ./save.js
 	 */
 	save,
-	// revalidate out-of-date gutenberg content... EG if htmltag changes
-	deprecated: [ v1 ],
+	deprecated: [
+		// update validation of new attribute textAlignment to alignment
+		// v2 ,
+		// revalidate out-of-date gutenberg content... EG if htmltag changes
+		v1,
+	], // left to right
 	// variation of blocks, how gb mutates data in editr
 	variations: [
 		{
@@ -106,7 +111,7 @@ registerBlockType( metadata.name, {
 				transform: ( { content, align } ) => {
 					return createBlock( 'blocks-course/text-box', {
 						text: content,
-						alignment: align,
+						textAlignment: align,
 					} );
 				},
 			},
@@ -141,11 +146,11 @@ registerBlockType( metadata.name, {
 				},
 				transform: ( attributes ) => {
 					// console.log("🚀 ~ attributes:", attributes)
-					const { text, alignment } = attributes;
+					const { text, textAlignment } = attributes;
 
 					return createBlock( 'core/paragraph', {
 						content: text,
-						align: alignment,
+						align: textAlignment,
 						// these won't chane on transform
 						gradient: false,
 						textColor: 'black',
