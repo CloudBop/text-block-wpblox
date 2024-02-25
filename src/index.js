@@ -28,7 +28,8 @@ import metadata from '../block.json';
  */
 
 import { __ } from '@wordpress/i18n';
-
+// import deprecated block interface
+import v1 from './v1';
 //
 // block.json
 // "attributes": {
@@ -82,8 +83,9 @@ registerBlockType( metadata.name, {
 	 * @see ./save.js
 	 */
 	save,
-
-	// variation of block
+	// revalidate out-of-date gutenberg content... EG if htmltag changes
+	deprecated: [ v1 ],
+	// variation of blocks, how gb mutates data in editr
 	variations: [
 		{
 			name: 'blocks-course/gradient-text-box',
