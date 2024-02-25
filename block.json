@@ -39,7 +39,7 @@
 	"example": {
 		"attributes": {
 			"text": "This is some text!",
-			"gradient": "red-to-blue",
+			"gradient": false,
 			"shadow": true
 		}
 	},
@@ -56,6 +56,14 @@
 		"alignment": {
 			"type": "string",
 			"default": "left"
+		},
+		"shadow": {
+			"type": "boolean",
+			"default": false
+		},
+		"shadowOpacity": {
+			"type": "number",
+			"default": 30
 		},
 		"backgroundColor": {
 			"type": "string"
