@@ -16,7 +16,6 @@ const v1 = {
 		},
 	},
 	attributes: {
-		...blockData.attributes,
 		// remove updated attribute name from obj
 		...omit( blockData.attributes, [ 'textAlignment' ] ),
 		// ... and revert to previous
@@ -27,7 +26,6 @@ const v1 = {
 		text: {
 			type: 'string',
 			source: 'html',
-			// here I am
 			selector: 'h4',
 		},
 	},
